@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
+import WithClass from '../hoc/WithClass';
 
 class App extends Component {
 
-  // constructor() {
-    
-    state = {
+  constructor(props) {
+    super(props);
+    console.log('[App.js] inside constructor : ', props);
+    this.state = {
       persons: [
         { id: 'asfa1', name: 'Max', age: 28 },
         { id: 'vasdf1', name: 'Manu', age: 29 },
@@ -16,6 +18,18 @@ class App extends Component {
       otherState: 'some other value',
       showPersons: false
     }
+  }
+
+  componentWillMount() {
+    console.log('[App.js] inside componentWillMount');
+  }
+
+  componentDidMount() {
+    console.log('[App.js] inside componentDidMount');
+  }
+  
+    
+
   // }
 
   nameChangedHandler = ( event, id ) => {
@@ -50,6 +64,7 @@ class App extends Component {
   }
 
   render () {
+    console.log('[App.js] inside render');
     let persons = null;
 
     if ( this.state.showPersons ) {
@@ -60,6 +75,8 @@ class App extends Component {
     }
 
     return (
+      <WithClass
+      classes={classes.App}>
         <div className={classes.App}>
           <Cockpit 
             appTitle={this.props.title}
@@ -68,6 +85,7 @@ class App extends Component {
             clicked={this.togglePersonsHandler}/>
           {persons}
         </div>
+      </WithClass>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
